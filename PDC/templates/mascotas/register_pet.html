@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Mascota</title>
+    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+</head>
+<body>
+    <h2>Registro de Mascotas</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.nombre.label_tag }} {{ form.nombre }}
+        {{ form.raza.label_tag }} {{ form.raza }}
+        {{ form.identificacion.label_tag }} {{ form.identificacion }}
+
+        <label for="imagen">Selecciona una imagen:</label>
+        <select id="imagen" name="imagen" onchange="mostrarImagen()">
+            <option value="">-- Selecciona una imagen --</option>
+            {% for img in imagenes %}
+                <option value="{{ img }}">{{ img }}</option>
+            {% endfor %}
+        </select>        
+        <div class="preview" id="vista_previa" style="margin-top:10px;"></div>
+        <button type="submit">Registrar Mascota</button>
+    </form>
+</body>
+</html>
