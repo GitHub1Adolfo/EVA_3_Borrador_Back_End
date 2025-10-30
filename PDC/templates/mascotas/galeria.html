@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Galería - Mis Perris</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">🐕 Mis Perris</a>
+
+        <div class="ml-auto">
+          {% if user.is_authenticated %}
+            <span class="navbar-text mr-3">Hola, {{ user.username }}</span>
+            <a class="btn btn-outline-danger" href="{% url 'user_logout' %}">Cerrar Sesión</a>
+            <a class="btn btn-success" href="{% url 'home' %}">Inicio</a>
+            <a class="btn btn-success" href="{% url 'listas' %}">Listados</a>
+          {% else %}
+            <a class="btn btn-success" href="{% url 'login' %}">Iniciar Sesión</a>
+            <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
+            <a class="btn btn-success" href="{% url 'home' %}">Inicio</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container main-card" style="margin-top: 30px;">
+      <h1>Galería de Mascotas</h1>
+      <p style="text-align: center; color: #00ff99; margin-bottom: 30px;">
+        Conoce a nuestras adorables mascotas esperando un hogar
+      </p>
+      
+      <!-- Galería de mascotas desde la base de datos -->
+      {% if mascotas %}
+      <div class="pets-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px;">
+        {% for mascota in mascotas %}
+        <div class="pet-card" style="background: rgba(30,30,47,0.98); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+          {% if mascota.imagen %}
+            <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" style="width: 100%; height: 200px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'images/default-pet.jpg' %}" alt="{{ mascota.nombre }}" style="width: 100%; height: 200px; object-fit: cover;">
+          {% endif %}
+          <div style="padding: 20px; color: #00ff99;">
+            <h3 style="margin-bottom: 10px;">{{ mascota.nombre }}</h3>
+            <p><strong>Raza:</strong> {{ mascota.raza }}</p>
+            <p><strong>ID:</strong> {{ mascota.identificacion }}</p>
+            {% if mascota.descripcion %}
+            <p>{{ mascota.descripcion|truncatewords:15 }}</p>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div style="text-align: center; padding: 40px; color: #00ff99;">
+        <p>No hay mascotas registradas aún.</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'register_pet' %}" class="btn" style="margin-top: 20px;">Registrar Primera Mascota</a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Galería de imágenes estáticas (opcional) -->
+      {% if images %}
+      <hr style="margin: 60px 0;">
+      <h2 style="text-align: center; margin-bottom: 30px;">Galería de Imágenes</h2>
+      <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        {% for image in images %}
+          <img src="{% static image %}" alt="Imagen de galería" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 2px solid #00ff99;">
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer class="footer" style="margin-top: 50px;">
+    <div class="container">
+      <p>&copy; 2025 Mis Perris. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,323 @@
+/* --- Global Configuration --- */
+/* Use custom properties for easy theme management */
+:root {
+  /* Futuristic Theme */
+  --futuristic-bg: #1e1e2f;
+  --futuristic-text: #00ff99;
+  --futuristic-dark: #2a2a40;
+  --futuristic-shadow: rgba(0,255,153,0.8);
+  --futuristic-font: 'Orbitron', sans-serif;
+
+  /* Classic Theme */
+  --classic-bg: #fff;
+  --classic-text: #333;
+  --classic-primary: #007bff;
+  --classic-font: Arial, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--futuristic-font);
+  background-color: var(--futuristic-bg);
+  color: var(--futuristic-text);
+}
+
+/* --- Futuristic Theme Components --- */
+/* HERO section */
+.hero {
+  width: 100%;
+  height: 240px;
+  background-image: url('../images/tengo-un-perro-sh.jpg');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -40px 60px rgba(0,0,0,0.55);
+}
+
+/* Navbar */
+.navbar {
+  width: 1100px;
+  background: rgba(42, 42, 64, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  padding: 10px 18px;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-text,
+.navbar a {
+  color: var(--futuristic-text) !important;
+  text-shadow: 0 0 8px rgba(0,255,153,0.6);
+}
+
+.navbar .btn {
+  font-family: var(--futuristic-font);
+  background-color: rgba(0,255,153,0.95) !important;
+  color: var(--futuristic-bg) !important;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Main content card */
+.main-card {
+  max-width: 80%;
+  margin: 30px auto 20px;
+  padding: 28px;
+  background: rgba(30,30,47,0.98);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  text-align: center;
+  color: var(--futuristic-text);
+}
+
+.main-card h1, .main-card h2 {
+  margin-bottom: 20px;
+  color: var(--futuristic-text);
+  text-shadow: 0 0 12px var(--futuristic-shadow);
+}
+
+/* Forms */
+form {
+  background: rgba(30,30,47,0.98);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 20px auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  color: var(--futuristic-text);
+  font-family: var(--futuristic-font);
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  color: var(--futuristic-text);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid var(--futuristic-text);
+  border-radius: 6px;
+  background: rgba(28,28,43,0.95);
+  color: var(--futuristic-text);
+  font-family: var(--futuristic-font);
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(0,255,153,0.5);
+}
+
+button {
+  margin-top: 15px;
+  background-color: var(--futuristic-text);
+  color: var(--futuristic-bg);
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #00cc7a;
+}
+
+/* Validation and UI */
+.text-error {
+  color: #ff4d4d;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
+.incomplete {
+  background-color: rgba(0, 255, 153, 0.15);
+  border-left: 4px solid var(--futuristic-text);
+}
+
+.btn-eliminar {
+  background-color: #ff4d4d;
+  color: white;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+.btn-eliminar:hover {
+  background-color: #ff1a1a;
+  color: white;
+}
+
+.btn-actualizar {
+  background-color: #594dff;
+  color: white;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+.btn-actualizar:hover {
+  background-color: #291aff;
+  color: white;
+}
+
+/* Image gallery */
+.galeria img {
+  border: 2px solid var(--futuristic-text);
+}
+
+.preview {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.preview img {
+  max-width: 200px;
+  border-radius: 10px;
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(25, 25, 40, 0.9);
+  border: 1px solid rgba(0, 255, 153, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  border: 1px solid rgba(0, 255, 153, 0.25);
+  padding: 10px;
+  text-align: center;
+  color: var(--futuristic-text);
+}
+
+.table th {
+  background-color: rgba(0, 255, 153, 0.1);
+  text-shadow: 0 0 8px var(--futuristic-shadow);
+}
+
+.table tr:nth-child(even) {
+  background-color: rgba(0, 255, 153, 0.05);
+}
+
+.table tr:hover {
+  background-color: rgba(0, 255, 153, 0.15);
+  transition: 0.2s;
+}
+
+.table td a {
+  text-decoration: none;
+}
+
+/* Horizontal rule */
+hr {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(0,255,153,0.6), transparent);
+  margin: 40px 0;
+}
+
+/* --- Classic Theme Components (with a new parent class) --- */
+/* To use this theme, wrap your HTML in a <div class="classic-theme"> */
+.classic-theme {
+  font-family: var(--classic-font);
+  background-color: #f8f9fa;
+  color: var(--classic-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.classic-theme .form-container {
+  background: var(--classic-bg);
+  padding: 25px 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 380px;
+}
+
+.classic-theme h2 {
+  text-align: center;
+  color: var(--classic-text);
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--classic-primary);
+  padding-bottom: 10px;
+}
+
+.classic-theme label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #555;
+}
+
+.classic-theme input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.classic-theme input:focus {
+  border-bottom: 2px solid var(--classic-primary);
+}
+
+.classic-theme button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--classic-primary);
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.classic-theme button:hover {
+  background-color: #0056b3;
+}
+
+.classic-theme .link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--classic-primary);
+  text-decoration: none;
+}
+
+.classic-theme .link:hover {
+  text-decoration: underline;
+}
+
+.classic-theme .messages {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.classic-theme .messages li {
+  background: #f1f1f1;
+  padding: 8px 10px;
+  border-left: 4px solid var(--classic-primary);
+  margin-bottom: 5px;
+  border-radius: 4px;
+}

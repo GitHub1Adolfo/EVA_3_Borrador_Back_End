@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Panel de Gestión</title>
+  <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+  <style>
+    /* Estilo para el botón de la sesión (acordeón) */
+    .session-header {
+      background-color: #0b4b1a;
+      color: #444;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 1.2em;
+      transition: 0.4s;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .active, .session-header:hover {
+      background-color: #ee1818;
+    }
+
+    /* Contenido (la tabla) que se muestra u oculta */
+    .session-content {
+      padding: 0px 10px 10px 10px;
+      background-color: black;
+      max-height: 0;
+      overflow: auto;
+      transition: max-height 0.3s ease-out;
+    }
+
+    /* Estilos del botón "+" */
+    .btn-add {
+      background-color: #28a745; /* Verde */
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 8px 12px;
+      font-size: 1.2em;
+      cursor: pointer;
+      line-height: 1; /* Para centrar el signo + */
+      text-decoration: none; /* Si es un <a> */
+      margin-left: 10px;
+    }
+    
+    .btn-add:hover {
+        background-color: #1e7e34;
+    }
+    
+    .header-group {
+        display: flex;
+        align-items: center;
+    }
+    /* Estilos de tabla existentes se mantienen */
+  </style>
+</head>
+<body>
+<div class="main-card">
+  <h1>Panel de Gestión</h1>
+
+  <button class="session-header">
+    <div class="header-group">
+        <h2>Usuarios</h2>
+        <a href="{% url 'register' %}" class="btn-add" title="Agregar Usuario">+</a>
+    </div>
+  </button>
+  <div class="session-content">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>RUN</th>
+            <th>Email</th>
+            <th>Fono</th>
+            <th>Estado</th>
+            <th>Admin</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user, profile in user_profiles %}
+          <tr {% if not user.username or not user.email or not profile or not profile.fono or not profile.estado %} class="incomplete" {% endif %}>
+            <td>{{ user.username|default_if_none:"" }}</td>
+            <td>{{ profile.apellido|default_if_none:"" }}</td>
+            <td>{{ profile.run|default_if_none:"" }}</td>
+            <td>{{ user.email|default_if_none:"" }}</td>
+            <td>{{ profile.fono|default_if_none:"" }}</td>
+            <td>{{ profile.estado|default_if_none:"" }}</td>
+            <td>{{ user.is_staff }}</td>
+            <td>
+              {% if request.user.id != user.id %}
+                <a href="{% url 'eliminar_usuario' user.id %}" class="btn-eliminar" onclick="return confirm('¿Eliminar este usuario?');">Eliminar</a>
+                <a href="{% url 'actualizar_usuario' user.id %}" class="btn-actualizar">Actualizar</a>
+              {% else %}
+                ---
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+
+  <button class="session-header">
+    <div class="header-group">
+        <h2>Mascotas</h2>
+        <a href="{% url 'register_pet' %}" class="btn-add" title="Agregar Mascota">+</a>
+    </div>
+  </button>
+  <div class="session-content">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Raza</th>
+            <th>ID</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for mascota in mascotas %}
+          <tr>
+            <td>{{ mascota.nombre|default_if_none:"" }}</td>
+            <td>{{ mascota.raza|default_if_none:"" }}</td>
+            <td>{{ mascota.identificacion|default_if_none:"" }}</td>
+            <td>{{ mascota.imagen.name|default_if_none:"(sin imagen)" }}</td>
+            <td>
+              <a href="{% url 'eliminar_mascota' mascota.id %}" class="btn-eliminar" onclick="return confirm('¿Eliminar esta mascota?');">Eliminar</a>
+              <a href="{% url 'actualizar_mascota' mascota.id %}" class="btn-actualizar">Actualizar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+
+  <button class="session-header">
+    <div class="header-group">
+        <h2>Adopciones</h2>
+        <a href="{% url 'adopcion' %}" class="btn-add" title="Registrar Adopción">+</a>
+    </div>
+  </button>
+  <div class="session-content">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped text-light">
+        <thead>
+          <tr>
+            <th>RUN Cliente</th>
+            <th>Nombre Mascota</th>
+            <th>ID Mascota</th>
+            <th>Detalle</th>
+            <th>Fecha Adopción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for adopcion in adopciones %}
+          <tr>
+            <td>{{ adopcion.run_cliente }}</td>
+            <td>{{ adopcion.nombre_mascota }}</td>
+            <td>{{ adopcion.id_mascota }}</td>
+            <td>{{ adopcion.detalle }}</td>
+            <td>{{ adopcion.fecha_adopcion|date:"d/m/Y H:i" }}</td>
+            <td class="text-center">
+                <a href="{% url 'eliminar_adopcion' adopcion.id %}" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar esta adopción?');">Eliminar</a>
+                <a href="{% url 'actualizar_adopcion' adopcion.id %}" class="btn-actualizar">Actualizar</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">No hay adopciones registradas.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+    // Script para la funcionalidad de Acordeón
+    var acc = document.getElementsByClassName("session-header");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Página de Inicio</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+</head>
+<body>
+  <header class="hero">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Inicio</a>
+
+        <div class="ml-auto">
+          {% if user.is_authenticated %}
+            <span class="navbar-text mr-3">Hola, {{ user.username }}</span>
+            <a class="btn btn-outline-danger" href="{% url 'user_logout' %}">Cerrar Sesión</a>
+            <a class="btn btn-success" href="{% url 'register_pet' %}">Registrar Mascota</a>
+            <a class="btn btn-success" href="{% url 'listas' %}">Listados</a>
+            <a class="btn btn-success" href="{% url 'galeria' %}">Galería</a>
+            <a class="btn btn-success" href="{% url 'adopcion' %}">Adopcion</a>
+            <!-- <a class="btn btn-success" href="/admin">Administración</a> -->
+          {% else %}
+            <a class="btn btn-success" href="{% url 'login' %}">Iniciar Sesión</a>
+            <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
+            
+            <a class="btn btn-success" href="{% url 'galeria' %}">Galería</a>
+            <!-- <a class="btn btn-success" href="/admin">Administración</a> -->
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container main-card">
+      <h1>Bienvenido a Nuestra Aplicación</h1>
+      {% if user.is_authenticated %}
+        <p>Hola, {{ user.username }}. Estás autenticado/a.</p>
+        <h1>Sobre Nosotros</h1>
+        <p>Somos una ONG que desde 2010 rescata, cuida y busca hogar para perros abandonados.</p>
+        <p>Contamos con voluntarios, veterinarios y una gran red de adopción.</p>
+      {% else %}
+        <p>Bienvenido. Por favor, <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'register' %}">regístrate</a>.</p>
+        <h1>Sobre Nosotros</h1>
+        <p>Somos una ONG que desde 2010 rescata, cuida y busca hogar para perros abandonados.</p>
+        <p>Contamos con voluntarios, veterinarios y una gran red de adopción.</p>
+      {% endif %}
+    </div>
+  </main>
+
+</body>
+</html>
